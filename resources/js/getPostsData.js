@@ -1,4 +1,4 @@
-const getData = () => {
+const getPostsData = () => {
     document.addEventListener("DOMContentLoaded", async (event) => {
         event.preventDefault();
         const text = document.getElementById("text");
@@ -30,7 +30,7 @@ const getData = () => {
                                             </div>
 
                                             <div class='ml-auto'>
-                                                <form method="GET" action="{{ route('posts.edit', post) }}">
+                                                <form method="GET" action="${post.id}/edit">
                                                     <button type='submit'>編集</button>
                                                 </form>
                                             </div>
@@ -47,4 +47,7 @@ const getData = () => {
         }
     });
 };
-getData();
+getPostsData();
+{
+    /* <form method="GET" action="{{ route('posts.edit', post) }}"></form> */
+}

@@ -10,3 +10,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('posts', [PostController::class, 'getData'])->name('posts.getData');
+// Route::put('{id}/edit', [PostController::class, 'update'])->name('posts.update');
