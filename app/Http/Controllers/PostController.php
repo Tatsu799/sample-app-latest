@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Post;
+use App\Models\Like;
 
 
 class PostController extends Controller
@@ -19,18 +20,40 @@ class PostController extends Controller
         // return view('post.index');
     }
 
+    // function store(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'text' => 'required|string',
+    //     ]);
+
+    //     $validated['user_id'] = Auth::id();
+    //     // $request->user()->create($validated);
+    //     // dd($validated);
+    //     Post::create($validated);
+
+    //     return redirect(route('posts.index'));
+    // }
+
     function store(Request $request)
     {
+        // dd($request);
         $validated = $request->validate([
             'text' => 'required|string',
         ]);
+        // dd($validated);
 
         $validated['user_id'] = Auth::id();
-        // $request->user()->create($validated);
-        // dd($validated);
-        Post::create($validated);
+        $validated['user_id'] = '1';
 
-        return redirect(route('posts.index'));
+        $post = Post::create($validated);
+        // dd($validated);
+
+        // dd('aaaa');
+        return response()->json([
+            'message' => 'Post created successfully!',
+            'post' => $post,
+            'redirect' => route('posts.index'),
+        ], 201);
     }
 
     function getData()
@@ -71,4 +94,31 @@ class PostController extends Controller
 
         return redirect(route('posts.index'));
     }
+
+    // function like(Request $request, $id)
+    // {
+    //     // 投稿のidからいいねを押す投稿を探す
+    //     $post = Post::findOrFail($id);
+
+    //     if (!$post->isLikedBy($request->user())) {
+    //         $post->likes()->create([
+    //             'user_id' => $request->user()->id,
+    //         ]);
+    //     }
+
+    //     return back();
+    // }
+
+    // function unlike(Request $request, $id)
+    // {
+    //     // 投稿のidからいいねを押す投稿を探す
+    //     $post = Post::findOrFail($id);
+
+    //     $like = $post->likes()->where('user_id', $request->user()->id)->first();
+    //     if ($like) {
+    //         $like->delete();
+    //     }
+
+    //     return back();
+    // }
 }

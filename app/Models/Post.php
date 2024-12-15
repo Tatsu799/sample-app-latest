@@ -10,4 +10,17 @@ class Post extends Model
         'text',
         'user_id',
     ];
+
+    function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    function isLikedBy(User $user)
+    {
+        return $this->likes()->where('user_id', $user->id)->exists();
+
+        // return $this->likes->where('user_id', $user->id)->count() > 0;
+
+    }
 }
