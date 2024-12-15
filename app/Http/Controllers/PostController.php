@@ -38,11 +38,11 @@ class PostController extends Controller
     {
         // dd($request);
         $validated = $request->validate([
-            'text' => 'required|string',
+            'text' => 'required|string|max:80',
         ]);
         // dd($validated);
 
-        $validated['user_id'] = Auth::id();
+        // $validated['user_id'] = Auth::id();
         $validated['user_id'] = '1';
 
         $post = Post::create($validated);
