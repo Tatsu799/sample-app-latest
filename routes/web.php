@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LikeController;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,14 +27,13 @@ Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
 Route::put('{id}/edit', [PostController::class, 'update'])->name('posts.update');
 Route::delete('{id}/edit', [PostController::class, 'delete'])->name('posts.delete');
-// Route::patch('{id}/edit', [PostController::class, 'back'])->name('posts.back');
 
 //like
-// Route::post('/posts/{id}/like', [LikeController::class, 'like'])->name('posts.like');
-// Route::delete('/posts/{id}/unlike', [LikeController::class, 'unlike'])->name('posts.unlike');
-
 Route::post('/posts/{id}/like', [LikeController::class, 'like'])->name('posts.like');
 Route::delete('/posts/{id}/unlike', [LikeController::class, 'unlike'])->name('posts.unlike');
+
+// Route::post('/posts/{id}/like', [LikeController::class, 'like'])->name('posts.like');
+// Route::delete('/posts/{id}/unlike', [LikeController::class, 'unlike'])->name('posts.unlike');
 
 require __DIR__ . '/auth.php';
 

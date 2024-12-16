@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>投稿一覧</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/getPostsData.js', 'resources/js/postData.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/getPostsData.js', 'resources/js/postData.js', 'resources/js/addLike.js'])
 </head>
 
 <body class="bg-gray-100">
@@ -30,41 +30,35 @@
         {{-- 追加 --}}
 
         <h1 class="text-2xl font-semibold text-center mb-8">投稿一覧</h1>
-        {{-- @foreach ($posts as $post) --}}
-
-        <div id="postList">
-            {{-- いいねを追加　仮 --}}
-            {{-- @foreach ($posts as $post) --}}
-            {{-- @if ($post->isLikedBy(Auth::user()))
-            <form method="POST" action="{{ route('posts.unlike', $post->id) }}">
-                @csrf
-                @method('DELETE')
-                <div class="flex mt-2">
-                    <button type="submit">いいねを取り消す</button>
-                </div>
-            </form>
-            @else
-            <form method="POST" action="{{ route('posts.like', $post->id) }}">
-                @csrf
-                <div class="flex mt-2">
-                    <button type="submit">いいね</button>
-                </div>
-            </form>
-            @endif
-            <p>10 {{ $post->likes->count() }}</p>
-            @endforeach --}}
-
-        </div>
-        {{-- <div class="max-w-lg mx-auto pb-6">
-            <div class=" bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-200"> --}}
-                {{-- <h2 class="text-xl font-bold text-gray-800">title</h2> --}}
-                {{-- <p id="content" class="text-gray-600 mt-2">{{ $post->text}}</p> --}}
-                {{-- <p id="content" class="text-gray-600 mt-2"></p>
+        @foreach ($posts as $post)
+        <div class="max-w-lg mx-auto pb-6">
+            <div class=" bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-200">
+                <p id="content" class="text-gray-600 mt-2">{{ $post->text}}</p>
+                {{-- <p id="content" class="text-gray-600 mt-2"></p> --}}
                 <span class="text-sm text-gray-500">{{ $post->created_at->format('Y-m-d H:i') }}</span>
+                {{-- いいねを追加 --}}
+                @if ($post->isLikedBy(Auth::user()))
+                <form method="POST" action="{{ route('posts.unlike', $post->id) }}">
+                    @csrf
+                    @method('DELETE')
+                    <div class="flex mt-2">
+                        <button type="submit" data-post-id="{{ $post->id}}">いいねを取り消す</button>
+                    </div>
+                </form>
+                @else
+                <form method="POST" action="{{ route('posts.like', $post->id) }}">
+                {{-- <div> --}}
+                    @csrf
+                    <div class="flex mt-2">
+                        <button id="like-btn" type="submit" data-post-id="{{ $post->id }}">いいね</button>
+                    </div>
+                {{-- </div> --}}
+                </form>
+                @endif
+                <p>{{ $post->likes->count() }}</p>
             </div>
-        </div> --}}
-        {{-- @endforeach --}}
-
+        </div>
+        @endforeach
     </div>
 </body>
 
@@ -130,3 +124,26 @@
     </div>
 </x-app-layout> --}}
  {{-- }} --}}
+
+         {{-- <div id="postList"> --}}
+            {{-- いいねを追加　仮 --}}
+            {{-- @foreach ($posts as $post) --}}
+            {{-- @if ($post->isLikedBy(Auth::user()))
+            <form method="POST" action="{{ route('posts.unlike', $post->id) }}">
+                @csrf
+                @method('DELETE')
+                <div class="flex mt-2">
+                    <button type="submit">いいねを取り消す</button>
+                </div>
+            </form>
+            @else
+            <form method="POST" action="{{ route('posts.like', $post->id) }}">
+                @csrf
+                <div class="flex mt-2">
+                    <button type="submit">いいね</button>
+                </div>
+            </form>
+            @endif
+            <p>10 {{ $post->likes->count() }}</p>
+            @endforeach --}}
+        {{-- </div> --}}
