@@ -26,18 +26,18 @@ class LikeController extends Controller
         // 投稿のidからいいねを押す投稿を探す
         $post = Post::findOrFail($id);
 
-        dd($request->user());
+        // dd($request->user());
         if (!$post->isLikedBy($request->user())) {
             $post->likes()->create([
                 'user_id' => $request->user()->id,
             ]);
         }
 
-        return response()->json([
-            'message' => 'Like created successfully!',
-            'redirect' => route('posts.index'),
-        ], 201);
-        // return back();
+        // return response()->json([
+        //     'message' => 'Like created successfully!',
+        //     'redirect' => route('posts.index'),
+        // ], 201);
+        return back();
     }
 
     function unlike(Request $request, $id)
